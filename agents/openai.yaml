@@ -1,0 +1,20 @@
+interface:
+  display_name: "X MCP"
+  short_description: "X APIとX Docs MCPを安全に扱う"
+  default_prompt: "Use $x-mcp to connect X API MCP and X Docs MCP for an X integration task."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "xapi"
+      description: "X API MCP through the xurl stdio bridge"
+      transport: "stdio"
+      url: "https://api.x.com/mcp"
+    - type: "mcp"
+      value: "x-docs"
+      description: "X documentation MCP server"
+      transport: "streamable_http"
+      url: "https://docs.x.com/mcp"
+
+policy:
+  allow_implicit_invocation: true
