@@ -39,6 +39,8 @@ Prerequisites:
 4. Keep `CLIENT_ID` and `CLIENT_SECRET` in environment/config secrets, not source control.
 5. Ensure Node.js and `npx` are available.
 
+The authorize URL's `redirect_uri` must exactly match the callback URL registered for the X app, including host, port, path, and scheme. X documentation is not fully consistent for local callbacks: the MCP guide uses `http://localhost:8080/callback`, while the general app guide recommends `http://127.0.0.1`. If OAuth shows an app access error, align the generated URL and the Developer Portal callback exactly, or set a custom `REDIRECT_URI` consistently in both places.
+
 Universal stdio MCP config:
 
 ```json
@@ -102,6 +104,7 @@ Use Docs MCP before answering implementation questions that can change over time
 - Browser does not open: use `xurl auth oauth2 --headless`.
 - `401` or token refresh failure: verify app credentials, then re-run OAuth login.
 - Redirect/callback error: ensure `http://localhost:8080/callback` or custom `REDIRECT_URI` is registered in the X app.
+- OAuth page says the app cannot be accessed: verify OAuth 2.0 is enabled for the exact X app, the generated `redirect_uri` exactly matches the registered callback URL, the requested scopes are allowed by the app permissions and X API package, and retry with read-only scopes before adding write, DM, email, or offline scopes.
 - `client-not-enrolled`: confirm the app is in the correct X package/environment.
 - Stale `npx` package: add `--registry=https://registry.npmjs.org/` to the args.
 - Garbled MCP output: do not run the bridge in verbose mode; stdout must remain JSON-RPC only.
